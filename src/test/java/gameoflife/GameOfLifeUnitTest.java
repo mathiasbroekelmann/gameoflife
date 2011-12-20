@@ -22,6 +22,7 @@ public class GameOfLifeUnitTest {
     @DataPoints
     public static GameOfLife[] getImplementationsToTest() {
         return new GameOfLife[] {
+            new MatzesGameOfLife1(),
             new SaschasGameOfLife1(),
             new MichasGameOfLife1(),
             new MichasGameOfLife2(),
@@ -63,7 +64,7 @@ public class GameOfLifeUnitTest {
         // two alive cells, each with one alive neighbour ...
         gameOfLife.setCellAlive(0, 0);
         gameOfLife.setCellAlive(1, 0);
-        // one alive cells without any alive neighbours ...
+        // one alive cells without any alive aliveAndDeadNeighbours ...
         gameOfLife.setCellAlive(3, 3);
 
         gameOfLife.calculateNextGeneration();

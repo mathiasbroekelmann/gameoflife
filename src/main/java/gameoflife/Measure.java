@@ -13,6 +13,7 @@ public class Measure {
 
     public static void main(String... args) {
         try {
+            measure(MatzesGameOfLife1.class);
             measure(SaschasGameOfLife1.class);
             measure(MichasGameOfLife1.class);
             measure(MichasGameOfLife2.class);
