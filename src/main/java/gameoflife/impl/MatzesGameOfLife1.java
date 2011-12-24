@@ -19,11 +19,6 @@ public class MatzesGameOfLife1 implements GameOfLife {
     }
 
     @Override
-    public boolean isCellAlive(final int x, final int y) {
-        return _activeCells.contains(new Cell(x, y));
-    }
-
-    @Override
     public void calculateNextGeneration() {
         final Collection<Cell> nextgeneration = new HashSet<Cell>();
         final Collection<Cell> traversedCells = new HashSet<Cell>();
