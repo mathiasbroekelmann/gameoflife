@@ -15,8 +15,6 @@ public class Measure {
         try {
             measure(MatzesGameOfLife1.class);
             measure(SaschasGameOfLife1.class);
-            measure(MichasGameOfLife1.class);
-            measure(MichasGameOfLife2.class);
             measure(MichasGameOfLife3.class);
             System.out.println("Done.");
         } catch (Exception e) {

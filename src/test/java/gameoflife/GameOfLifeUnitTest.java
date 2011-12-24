@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import java.awt.*;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
@@ -25,7 +26,6 @@ public class GameOfLifeUnitTest {
             new MatzesGameOfLife1(),
             new SaschasGameOfLife1(),
             new MichasGameOfLife1(),
-            new MichasGameOfLife2(),
             new MichasGameOfLife3()
         };
     }
@@ -36,17 +36,30 @@ public class GameOfLifeUnitTest {
     }
 
     @Theory
-    public void test_setCellAlive_and_isCellAlive(GameOfLife gameOfLife) {
+    public void test_setCellAlive(GameOfLife gameOfLife) {
         gameOfLife.setCellAlive(1, 2);
 
-        assertThat(gameOfLife.isCellAlive(1, 2), is(true));
+        HashSet<Point> coordinatesOfAliveCells = newHashSet(gameOfLife.getCoordinatesOfAliveCells());
+
+        assertThat(coordinatesOfAliveCells, is(newHashSet(new Point(1, 2))));
     }
 
     @Theory
-    public void test_setCellAlive_and_isCellAlive_with_negative_x_coordinate(GameOfLife gameOfLife) {
+    public void test_setCellAlive_with_negative_x_coordinate(GameOfLife gameOfLife) {
         gameOfLife.setCellAlive(-3, 4);
 
-        assertThat(gameOfLife.isCellAlive(-3, 4), is(true));
+        HashSet<Point> coordinatesOfAliveCells = newHashSet(gameOfLife.getCoordinatesOfAliveCells());
+
+        assertThat(coordinatesOfAliveCells, is(newHashSet(new Point(-3, 4))));
+    }
+
+    @Theory
+    public void test_setCellAlive_with_large_coordinates(GameOfLife gameOfLife) {
+        gameOfLife.setCellAlive(-123456789, 987654321);
+
+        HashSet<Point> coordinatesOfAliveCells = newHashSet(gameOfLife.getCoordinatesOfAliveCells());
+
+        assertThat(coordinatesOfAliveCells, is(newHashSet(new Point(-123456789, 987654321))));
     }
 
     @Theory
@@ -64,7 +77,7 @@ public class GameOfLifeUnitTest {
         // two alive cells, each with one alive neighbour ...
         gameOfLife.setCellAlive(0, 0);
         gameOfLife.setCellAlive(1, 0);
-        // one alive cells without any alive aliveAndDeadNeighbours ...
+        // one alive cells without any alive neighbours ...
         gameOfLife.setCellAlive(3, 3);
 
         gameOfLife.calculateNextGeneration();
@@ -144,8 +157,6 @@ public class GameOfLifeUnitTest {
 
     @Theory
     public void test_glider_at_large_coordinates(GameOfLife gameOfLife) {
-        assumeThat(gameOfLife, not(instanceOf(MichasGameOfLife2.class)));
-        
         Set<Point> glider = newHashSet(
             new Point(100001,100002),
             new Point(100002,100003),
